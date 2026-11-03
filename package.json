@@ -1,0 +1,39 @@
+{
+  "name": "crud-productos-node",
+  "version": "1.0.0",
+  "description": "API REST del catálogo de productos con Node.js, Express, JWT, CORS y validación HTTP. Frontend con Bootstrap.",
+  "private": true,
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "db:reset": "node scripts/reset-db.js",
+    "db:inspect": "node scripts/inspect-db.js",
+    "smoke": "node scripts/smoke-test.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "rest",
+    "crud",
+    "jwt",
+    "cors",
+    "bootstrap"
+  ],
+  "author": "Actividad Práctica - Módulo 3",
+  "license": "MIT",
+  "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

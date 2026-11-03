@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inicio de sesión del panel administrativo del catálogo de productos.">
+  <title>Iniciar sesión • Catálogo de Productos</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.ico">
+
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Tipografía Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Estilos base del proyecto -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <!-- Estilos específicos del login -->
+  <link href="assets/css/login.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="auth-page">
+
+    <!-- Panel de marca (izquierda) -->
+    <aside class="auth-brand">
+      <header class="auth-brand-top">
+        <div class="auth-logo">
+          <span class="auth-logo-mark"><i class="bi bi-box-seam"></i></span>
+          <span>Catálogo</span>
+        </div>
+      </header>
+
+      <div class="auth-brand-main">
+        <h2>Tu inventario,<br><span>en orden.</span></h2>
+        <p class="auth-brand-lead">Productos, stock y precios en un solo lugar.</p>
+      </div>
+
+      <footer class="auth-brand-footer">
+        Actividad Práctica · Módulo 3
+      </footer>
+    </aside>
+
+    <!-- Formulario (derecha) -->
+    <main class="auth-form-side">
+      <section class="auth-card" aria-labelledby="tituloLogin">
+        <h1 id="tituloLogin">Iniciar sesión</h1>
+        <p class="auth-sub">Accede al panel de administración.</p>
+
+        <form id="formLogin" novalidate>
+          <div class="auth-field campo-formulario">
+            <label for="usuario">Usuario</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-person auth-input-icon"></i>
+              <input
+                type="text"
+                id="usuario"
+                name="usuario"
+                placeholder="Tu usuario"
+                autocomplete="username"
+                spellcheck="false"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="auth-field campo-formulario">
+            <label for="contrasena">Contraseña</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-lock auth-input-icon"></i>
+              <input
+                type="password"
+                id="contrasena"
+                name="contrasena"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+              >
+              <button
+                type="button"
+                class="auth-toggle"
+                id="togglePassword"
+                onclick="togglePasswordVisibility()"
+                aria-label="Mostrar u ocultar contraseña"
+                aria-controls="contrasena"
+              >
+                <i class="bi bi-eye" id="iconoOjo"></i>
+              </button>
+            </div>
+            <div class="auth-caps d-none" id="capsHint">
+              <i class="bi bi-capslock"></i> Bloq Mayús está activado
+            </div>
+          </div>
+
+          <div class="auth-error d-none" id="errorLogin" role="alert">
+            <i class="bi bi-exclamation-circle"></i>
+            <span id="textoError"></span>
+          </div>
+
+          <button type="submit" class="auth-submit" id="btnLogin">
+            <span id="textoBtnLogin">Iniciar sesión</span>
+            <span class="spinner-border spinner-border-sm d-none" id="spinLogin" aria-hidden="true"></span>
+            <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          </button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Notificaciones -->
+  <div class="contenedor-toasts" id="contenedorToasts"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/catalogo.js"></script>
+</body>
+</html>
