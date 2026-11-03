@@ -896,8 +896,9 @@ Pasos:
 1. Sube el proyecto a GitHub **sin** `.env`.
 2. Crea una base de datos gratuita en [turso.tech](https://turso.tech) y copia `TURSO_URL` y `TURSO_AUTH_TOKEN`.
 3. En Vercel: **Add New → Project** e importa el repositorio.
-4. Framework Preset: **Other**. Build Command y Output Directory vacíos.
-5. Agrega las variables de entorno:
+4. En **Root Directory** selecciona la carpeta **`catalogo-productos`** (ahí vive el proyecto dentro del repositorio).
+5. Framework Preset: **Other**. Build Command y Output Directory vacíos.
+6. Agrega las variables de entorno:
    - `JWT_SECRET` (mínimo 32 caracteres)
    - `ADMIN_USER`
    - `ADMIN_PASSWORD`
@@ -905,8 +906,8 @@ Pasos:
    - `NODE_ENV=production`
    - `TURSO_URL` (URL de tu base Turso)
    - `TURSO_AUTH_TOKEN` (token de Turso)
-6. **No definas `DB_PATH`**: Turso maneja su propio almacenamiento.
-7. Deploy y verifica `https://tu-proyecto.vercel.app/api/health`.
+7. **No definas `DB_PATH`**: Turso maneja su propio almacenamiento.
+8. Deploy y verifica `https://tu-proyecto.vercel.app/api/health`.
 
 Limitaciones del plan gratuito:
 

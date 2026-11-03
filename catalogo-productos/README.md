@@ -342,10 +342,11 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 2. Crea una base de datos gratuita en [turso.tech](https://turso.tech) y copia `TURSO_URL` y `TURSO_AUTH_TOKEN`.
 3. Entra a [vercel.com](https://vercel.com) → **Add New → Project**.
 4. Importa el repositorio.
-5. Framework Preset: **Other**. Deja **Build Command** y **Output Directory** vacíos.
-6. Agrega las variables de entorno del apartado 14.1 (incluyendo `TURSO_URL` y `TURSO_AUTH_TOKEN`).
-7. Pulsa **Deploy**.
-8. Abre la URL `https://tu-proyecto.vercel.app`.
+5. En **Root Directory** selecciona la carpeta **`catalogo-productos`**. Si el proyecto está en la raíz del repositorio, deja este campo vacío.
+6. Framework Preset: **Other**. Deja **Build Command** y **Output Directory** vacíos.
+7. Agrega las variables de entorno del apartado 14.1 (incluyendo `TURSO_URL` y `TURSO_AUTH_TOKEN`).
+8. Pulsa **Deploy**.
+9. Abre la URL `https://tu-proyecto.vercel.app`.
 
 ### 14.3 Verificación posterior al despliegue
 
