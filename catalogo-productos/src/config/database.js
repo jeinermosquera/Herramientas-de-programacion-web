@@ -5,8 +5,8 @@
 //   - Producción/Vercel: Turso (libSQL), persistente y async.
 //
 // Detecta automáticamente el modo según las variables de entorno:
-//   TURSO_URL + TURSO_AUTH_TOKEN  -> Turso
-//   lo contrario                   -> JSON local
+//   TURSO_URL (o TURSO_DATABASE_URL) + TURSO_AUTH_TOKEN -> Turso
+//   lo contrario                                          -> JSON local
 // -----------------------------------------------------------------------------
 
 require('dotenv').config();
@@ -24,15 +24,21 @@ const ES_PRODUCCION = process.env.NODE_ENV === 'production';
 // Configuración de Turso (libSQL)
 // ---------------------------------------------------------------------------
 
-const TURSO_URL = process.env.TURSO_URL;
+// Acepta los nombres de variable que usan tanto la CLI de Turso como la
+// integración de Turso en Vercel (TURSO_URL / TURSO_DATABASE_URL).
+const TURSO_URL =
+  process.env.TURSO_URL ||
+  process.env.TURSO_DATABASE_URL ||
+  process.env.TURSO_CONNECTION_URL;
 const TURSO_AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN;
 const USAR_TURSO = Boolean(TURSO_URL && TURSO_AUTH_TOKEN);
 
 // En Vercel sin Turso, advertir que los datos son efímeros.
 if (ES_VERCEL && !USAR_TURSO) {
   console.warn(
-    '[database] OJO: no se configuraron TURSO_URL/TURSO_AUTH_TOKEN. En Vercel ' +
-    'los datos se guardan en /tmp y se perderán al reiniciar la función.'
+    '[database] OJO: no se configuraron TURSO_URL/TURSO_DATABASE_URL ni ' +
+    'TURSO_AUTH_TOKEN. En Vercel los datos se guardan en /tmp y se perderán ' +
+    'al reiniciar la función.'
   );
 }
 

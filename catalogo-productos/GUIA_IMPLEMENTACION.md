@@ -250,7 +250,7 @@ Variables de entorno para Turso:
 
 | Variable | Descripción |
 |---|---|
-| `TURSO_URL` | URL de tu base de datos Turso (`libsql://...`) |
+| `TURSO_URL` | URL de tu base de datos Turso (`libsql://...`). También sirve `TURSO_DATABASE_URL`. |
 | `TURSO_AUTH_TOKEN` | Token de autenticación de Turso |
 
 ---

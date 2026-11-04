@@ -327,7 +327,7 @@ En Vercel: **Project → Settings → Environment Variables**. Agrega:
 | `ADMIN_PASSWORD` | Tu contraseña del panel. | Sí |
 | `JWT_EXPIRES_IN` | `1h` | No |
 | `NODE_ENV` | `production` | Sí |
-| `TURSO_URL` | URL de tu base de datos Turso (ej. `libsql://tu-db.turso.io`). | Sí (para persistencia) |
+| `TURSO_URL` | URL de tu base de datos Turso (ej. `libsql://tu-db.turso.io`). También se acepta `TURSO_DATABASE_URL` (nombre que usa la integración de Vercel). | Sí (para persistencia) |
 | `TURSO_AUTH_TOKEN` | Token de autenticación de Turso. | Sí (para persistencia) |
 
 Para generar un secreto seguro:
