@@ -1,0 +1,24 @@
+﻿services:
+  - type: web
+    name: catalogo-productos
+    env: node
+    rootDir: catalogo-productos
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 1h
+      - key: PORT
+        value: 3000
+    disk:
+      name: data
+      mountPath: /opt/render/project/src/catalogo-productos/data
+      sizeGB: 1
