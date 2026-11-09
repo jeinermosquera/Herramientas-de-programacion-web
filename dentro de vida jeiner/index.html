@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Datos del documento -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeiner Isaac Mosquera Rentería | Portafolio académico</title>
+  <meta name="description" content="Portafolio académico de Jeiner Isaac Mosquera Rentería, estudiante de Ingeniería en Telecomunicaciones e Informática en la Universidad Tecnológica del Chocó Diego Luis Córdoba.">
+  <meta name="author" content="Jeiner Isaac Mosquera Rentería">
+  <meta name="theme-color" content="#F3F1EC" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121A26" media="(prefers-color-scheme: dark)">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="img/favicon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+  <link rel="icon" href="img/favicon/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+
+  <!-- Fuentes y librerías externas (CDN) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Estilos propios (?v=25 evita que el navegador use una versión en caché) -->
+  <link href="css/styles.css?v=25" rel="stylesheet">
+</head>
+<body>
+  <!-- Accesibilidad: saltar directamente al contenido con Tab -->
+  <a class="skip-link" href="#inicio">Saltar al contenido principal</a>
+
+  <!-- Cabecera fija con marca, botón de tema y menú -->
+  <header class="site-header">
+    <nav class="navbar navbar-expand-lg" aria-label="Navegación principal">
+      <div class="container">
+        <a class="navbar-brand" href="#inicio">
+          <span class="brand-mark" aria-hidden="true">JM</span>
+          <span class="brand-name">Jeiner Mosquera</span>
+        </a>
+
+        <div class="navbar-tools order-lg-3">
+          <!-- Botón de tema claro/oscuro (lo controla main.js) -->
+          <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="Activar modo oscuro"
+            title="Cambiar entre modo claro y oscuro"
+          >
+            <i class="bi bi-moon-stars" aria-hidden="true"></i>
+            <span class="theme-toggle-label">Oscuro</span>
+          </button>
+
+          <!-- Botón del menú en móvil -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal"
+            aria-expanded="false"
+            aria-label="Abrir menú de navegación"
+          >
+            <i class="bi bi-list" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Enlaces internos a cada sección -->
+        <div class="collapse navbar-collapse order-lg-2" id="menuPrincipal">
+          <ul class="navbar-nav ms-lg-auto">
+            <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sobre-mi">Sobre mí</a></li>
+            <li class="nav-item"><a class="nav-link" href="#proyectos">Proyectos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Inicio: presentación y ficha académica -->
+    <section id="inicio" class="hero" aria-labelledby="tituloInicio">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-main">
+            <p class="eyebrow" data-reveal>Portafolio académico</p>
+
+            <h1 id="tituloInicio" class="hero-title" data-reveal>
+              Hola, soy Jeiner Isaac Mosquera Rentería.
+            </h1>
+
+            <p class="hero-subtitle" data-reveal>
+              Estudiante de Ingeniería en Telecomunicaciones e Informática.
+            </p>
+
+            <p class="hero-text" data-reveal>
+              Me interesa comprender cómo funcionan las redes, las telecomunicaciones y el software,
+              y aplicar esos conocimientos en proyectos que permitan desarrollar soluciones tecnológicas.
+            </p>
+
+            <div class="hero-actions" data-reveal>
+              <a class="btn btn-solid" href="#proyectos">Conocer mis proyectos</a>
+              <a class="btn btn-outline" href="#sobre-mi">Sobre mí</a>
+            </div>
+          </div>
+
+          <!-- Ficha académica: datos en formato clave-valor -->
+          <aside class="hero-card" aria-label="Datos académicos" data-reveal>
+            <p class="hero-card-label">Ficha académica</p>
+
+            <dl class="hero-facts">
+              <div class="hero-fact">
+                <dt>Programa</dt>
+                <dd>Ingeniería en Telecomunicaciones e Informática</dd>
+              </div>
+              <div class="hero-fact">
+                <dt>Universidad</dt>
+                <dd>Universidad Tecnológica del Chocó Diego Luis Córdoba</dd>
+              </div>
+              <div class="hero-fact">
+                <dt>Semestre</dt>
+                <dd>Quinto semestre</dd>
+              </div>
+              <div class="hero-fact">
+                <dt>Enfoque</dt>
+                <dd>Redes, telecomunicaciones y desarrollo de software</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre mí: texto y tarjeta de áreas de interés -->
+    <section id="sobre-mi" class="section" aria-labelledby="tituloSobreMi">
+      <div class="container">
+        <div class="section-head about-head">
+          <div data-reveal>
+            <p class="section-index"><span aria-hidden="true">01</span> Sobre mí</p>
+            <h2 id="tituloSobreMi" class="section-title">Formación, intereses y objetivo</h2>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <div class="prose" data-reveal>
+            <p>
+              Soy estudiante de Ingeniería en Telecomunicaciones e Informática en la Universidad
+              Tecnológica del Chocó Diego Luis Córdoba. Mi formación me permite explorar la relación
+              entre las redes de comunicación, la infraestructura tecnológica y el desarrollo de software.
+            </p>
+            <p>
+              Tengo interés en seguir fortaleciendo mis conocimientos en redes, telecomunicaciones,
+              ciberseguridad, programación y bases de datos. Me interesa aprender mediante la práctica,
+              comprender el funcionamiento de las tecnologías y desarrollar proyectos que me permitan
+              aplicar los conocimientos adquiridos durante mi formación académica.
+            </p>
+            <p>
+              Mi objetivo es continuar creciendo académica y profesionalmente, consolidando bases
+              técnicas que me permitan participar en el diseño, la implementación y el mejoramiento
+              de soluciones tecnológicas.
+            </p>
+          </div>
+
+          <aside class="interests" aria-labelledby="tituloIntereses" data-reveal>
+            <h3 id="tituloIntereses" class="interests-title">Áreas de interés</h3>
+            <ul class="tag-list">
+              <li class="tag">Redes y telecomunicaciones</li>
+              <li class="tag">Ciberseguridad</li>
+              <li class="tag">Desarrollo web</li>
+              <li class="tag">Programación</li>
+              <li class="tag">Bases de datos</li>
+            </ul>
+            <p class="interests-note">
+              Estos intereses corresponden a áreas de formación y aprendizaje, no a certificaciones
+              ni a experiencia profesional.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proyectos: se cargan desde data/projects.json con projects.js -->
+    <section id="proyectos" class="section section-alt" aria-labelledby="tituloProyectos">
+      <div class="container">
+        <div class="row g-4 align-items-end section-head">
+          <div class="col-12 col-lg-7" data-reveal>
+            <p class="section-index"><span aria-hidden="true">02</span> Proyectos</p>
+            <h2 id="tituloProyectos" class="section-title">Trabajo aplicado</h2>
+          </div>
+          <div class="col-12 col-lg-5" data-reveal>
+            <p class="section-intro">
+              Proyectos académicos y de emprendimiento en los que he participado. La lista se carga
+              desde un archivo JSON, de modo que puede ampliarse sin modificar el código.
+            </p>
+          </div>
+        </div>
+
+        <!-- Mensajes de carga, lista vacía o error -->
+        <div id="projectsStatus" class="projects-status" role="status" aria-live="polite"></div>
+
+        <!-- Aquí se insertan las tarjetas generadas por JavaScript -->
+        <div id="projectsGrid" class="row g-4"></div>
+      </div>
+    </section>
+
+    <!-- Contacto: formulario validado en el navegador, sin backend -->
+    <section id="contacto" class="section" aria-labelledby="tituloContacto">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-12 col-lg-5">
+            <div data-reveal>
+              <p class="section-index"><span aria-hidden="true">03</span> Contacto</p>
+              <h2 id="tituloContacto" class="section-title">Escríbeme</h2>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-7">
+            <!-- novalidate desactiva los mensajes del navegador; contact.js usa los propios -->
+            <form id="contactForm" class="contact-form" method="POST" novalidate data-reveal>
+              <p class="form-legend"><span aria-hidden="true">*</span> Campos obligatorios</p>
+
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="nombre">Nombre completo <span class="req" aria-hidden="true">*</span></label>
+                  <input
+                    class="form-control"
+                    id="nombre"
+                    name="nombre"
+                    type="text"
+                    autocomplete="name"
+                    required
+                    minlength="3"
+                    maxlength="80"
+                    aria-describedby="nombreError"
+                  >
+                  <p class="field-error" id="nombreError" hidden></p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="correo">Correo electrónico <span class="req" aria-hidden="true">*</span></label>
+                  <input
+                    class="form-control"
+                    id="correo"
+                    name="correo"
+                    type="email"
+                    autocomplete="email"
+                    inputmode="email"
+                    required
+                    maxlength="120"
+                    aria-describedby="correoError"
+                  >
+                  <p class="field-error" id="correoError" hidden></p>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label" for="asunto">Asunto <span class="req" aria-hidden="true">*</span></label>
+                  <input
+                    class="form-control"
+                    id="asunto"
+                    name="asunto"
+                    type="text"
+                    required
+                    minlength="5"
+                    maxlength="100"
+                    aria-describedby="asuntoError"
+                  >
+                  <p class="field-error" id="asuntoError" hidden></p>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label" for="mensaje">Mensaje <span class="req" aria-hidden="true">*</span></label>
+                  <textarea
+                    class="form-control"
+                    id="mensaje"
+                    name="mensaje"
+                    rows="5"
+                    required
+                    minlength="20"
+                    maxlength="1000"
+                    aria-describedby="mensajeError mensajeAyuda"
+                  ></textarea>
+                  <p class="field-help" id="mensajeAyuda">Mínimo 20 caracteres.</p>
+                  <p class="field-error" id="mensajeError" hidden></p>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-solid" type="submit">Validar mensaje</button>
+              </div>
+
+              <!-- Resultado de la validación -->
+              <p id="formStatus" class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row g-4 footer-top">
+        <div class="col-12 col-md-7">
+          <p class="footer-name">Jeiner Isaac Mosquera Rentería</p>
+          <p class="footer-role">
+            Ingeniería en Telecomunicaciones e Informática<br>
+            Universidad Tecnológica del Chocó Diego Luis Córdoba
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <!-- El año lo escribe main.js -->
+        <p>&copy; <span id="year"></span> Jeiner Isaac Mosquera Rentería</p>
+        <a class="footer-top-link" href="#inicio">
+          Volver arriba
+          <i class="bi bi-arrow-up" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: Bootstrap y luego los propios -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/projects.js?v=25"></script>
+  <script src="js/contact.js?v=25"></script>
+</body>
+</html>
