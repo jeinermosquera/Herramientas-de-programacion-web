@@ -14,13 +14,13 @@ const app = require('../src/expressApp');
 // (ej. /api/index.js?path=health). Este middleware lo recupera y lo deja
 // como req.url normal para que Express enruté correctamente.
 app.use((req, res, next) => {
-  if (req.url.includes('/api/index.js')) {
-    try {
-      const url = new URL(req.url, `https://${req.headers.host || 'localhost'}`);
-      const path = url.searchParams.get('path') || url.pathname.replace('/api/index.js', '') || '/';
+  if (req.url.startsWith('/api/index.js')) {
+    const qIndex = req.url.indexOf('?');
+    if (qIndex !== -1) {
+      const params = new URLSearchParams(req.url.slice(qIndex + 1));
+      const path = params.get('path') || '/';
       req.url = path;
-    } catch (e) {
-      // Si falla el parsing, eliminar /api/index.js del inicio
+    } else {
       req.url = req.url.replace('/api/index.js', '') || '/';
     }
   }
