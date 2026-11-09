@@ -17,6 +17,18 @@
 
   let requestId = 0;
 
+  /* Proyectos por defecto embebidos (se muestran si falla la carga del JSON) */
+  const DEFAULT_PROJECTS = [
+    {
+      nombre: 'Apomat',
+      descripcion: 'Proyecto de aromatizantes para el hogar y la oficina, iniciativa de emprendimiento con presencia web.',
+      categoria: 'Emprendimiento y desarrollo web',
+      url: 'https://jeinermosquera.pythonanywhere.com/',
+      imagen: 'img/apomat.jpg',
+      imagenAlt: 'Logo del proyecto Apomat'
+    }
+  ];
+
   /* Estados de la lista: cargando, vacía y error -------------------------- */
   function setStatus(className) {
     status.className = className;
@@ -265,7 +277,8 @@
         if (currentRequest !== requestId) {
           return;
         }
-        showError();
+        clearStatus();
+        renderProjects(DEFAULT_PROJECTS);
       });
   }
 
