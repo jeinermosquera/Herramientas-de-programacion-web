@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/css/(.*)", "dest": "/jeiner-portafolio/css/$1" },
+    { "src": "/js/(.*)", "dest": "/jeiner-portafolio/js/$1" },
+    { "src": "/img/(.*)", "dest": "/jeiner-portafolio/img/$1" },
+    { "src": "/data/(.*)", "dest": "/jeiner-portafolio/data/$1" },
+    { "src": "/favicon(.*)", "dest": "/jeiner-portafolio/favicon$1" },
+    { "src": "/(.*)", "dest": "/jeiner-portafolio/index.html" }
+  ]
+}
