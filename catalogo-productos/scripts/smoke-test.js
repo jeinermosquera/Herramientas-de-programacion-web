@@ -51,10 +51,7 @@ function verificar(nombre, condicion, detalle = '') {
   // 1. Salud / base de datos
   const health = await peticion('GET', '/api/health');
   verificar('GET /api/health → 200', health.status === 200);
-  const esBaseDatosValida =
-    health.datos?.baseDatos === 'JSON' ||
-    health.datos?.baseDatos?.includes('Turso');
-  verificar('Base de datos activa', esBaseDatosValida);
+  verificar('Base de datos JSON activa', health.datos?.baseDatos === 'JSON');
 
   // 2. Login correcto
   const login = await peticion('POST', '/api/auth/login', {

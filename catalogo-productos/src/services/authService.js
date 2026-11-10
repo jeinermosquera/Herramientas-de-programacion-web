@@ -2,8 +2,7 @@
 // -----------------------------------------------------------------------------
 // Servicio de autenticación: valida credenciales contra los usuarios guardados
 // (contraseña cifrada con bcrypt) y genera/verifica tokens.
-// Los datos se leen y escriben mediante src/config/database.js, que soporta
-// JSON local (desarrollo) y Turso/libSQL (producción/Vercel).
+// Los datos se leen y escriben mediante src/config/database.js (archivo JSON).
 // -----------------------------------------------------------------------------
 
 const jwt = require('jsonwebtoken');

@@ -1,8 +1,7 @@
 // src/services/productoService.js
 // -----------------------------------------------------------------------------
 // Capa de servicios: lógica de negocio y acceso a datos de productos.
-// Los datos se leen y escriben mediante src/config/database.js, que soporta
-// JSON local (desarrollo) y Turso/libSQL (producción/Vercel).
+// Los datos se leen y escriben mediante src/config/database.js (archivo JSON).
 // -----------------------------------------------------------------------------
 
 const { randomUUID } = require('crypto');

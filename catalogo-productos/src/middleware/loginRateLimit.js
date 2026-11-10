@@ -6,9 +6,8 @@
 // Solo cuentan los intentos fallidos (400/401); un login correcto no consume
 // cupo, así que las pruebas manuales no bloquean al usuario.
 //
-// Nota: el contador vive en memoria de cada instancia. En Vercel (serverless)
-// cada instancia tiene su propio contador, por lo que es una protección
-// "best effort". Para una solución distribuida se usaría Redis/Upstash.
+// Nota: el contador vive en memoria de cada instancia, por lo que es una
+// protección "best effort". Para una solución distribuida se usaría Redis.
 // -----------------------------------------------------------------------------
 
 const VENTANA_MS = 10 * 60 * 1000; // 10 minutos

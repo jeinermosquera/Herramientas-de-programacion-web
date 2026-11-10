@@ -2,6 +2,7 @@
   - type: web
     name: catalogo-productos
     env: node
+    plan: free
     rootDir: catalogo-productos
     buildCommand: npm install
     startCommand: npm start
@@ -16,9 +17,3 @@
         sync: false
       - key: JWT_EXPIRES_IN
         value: 1h
-      - key: PORT
-        value: 3000
-    disk:
-      name: data
-      mountPath: /opt/render/project/src/catalogo-productos/data
-      sizeGB: 1

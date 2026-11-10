@@ -12,8 +12,5 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Vercel
-.vercel
-
 # Datos locales generados por la aplicación
 **/data/*.json

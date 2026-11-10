@@ -1,12 +1,15 @@
 // src/config/database.js
 // -----------------------------------------------------------------------------
-// Persistencia con doble soporte:
-//   - Desarrollo/local: archivo JSON (data/catalogo.json), síncrono.
-//   - Producción/Vercel: Turso (libSQL), persistente y async.
+// Persistencia en archivo JSON: data/catalogo.json
 //
-// Detecta automáticamente el modo según las variables de entorno:
-//   TURSO_URL (o TURSO_DATABASE_URL) + TURSO_AUTH_TOKEN -> Turso
-//   lo contrario                                          -> JSON local
+// Se usa tanto en local como en producción (Render). La ruta puede cambiarse
+// con la variable de entorno DB_PATH:
+//   DB_PATH=data/catalogo.json   -> relativa a la raíz del proyecto
+//   DB_PATH=/ruta/absoluta.json  -> absoluta
+//   DB_PATH=:memory:             -> en memoria (útil para pruebas)
+//
+// La API exportada es async para que los servicios usen siempre "await",
+// aunque la lectura/escritura en disco sea síncrona.
 // -----------------------------------------------------------------------------
 
 require('dotenv').config();
@@ -14,54 +17,15 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const { createClient } = require('@libsql/client');
 
 const RAIZ_PROYECTO = path.join(__dirname, '..', '..');
-const ES_VERCEL = process.env.VERCEL === '1' || process.env.VERCEL === 'true';
-const ES_PRODUCCION = process.env.NODE_ENV === 'production';
 
 // ---------------------------------------------------------------------------
-// Configuración de Turso (libSQL)
-// ---------------------------------------------------------------------------
-
-// Acepta los nombres de variable que usan tanto la CLI de Turso como la
-// integración de Turso en Vercel (TURSO_URL / TURSO_DATABASE_URL).
-const TURSO_URL =
-  process.env.TURSO_URL ||
-  process.env.TURSO_DATABASE_URL ||
-  process.env.TURSO_CONNECTION_URL;
-const TURSO_AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN;
-const USAR_TURSO = Boolean(TURSO_URL && TURSO_AUTH_TOKEN);
-
-// En Vercel sin Turso, advertir que los datos son efímeros.
-if (ES_VERCEL && !USAR_TURSO) {
-  console.warn(
-    '[database] OJO: no se configuraron TURSO_URL/TURSO_DATABASE_URL ni ' +
-    'TURSO_AUTH_TOKEN. En Vercel los datos se guardan en /tmp y se perderán ' +
-    'al reiniciar la función.'
-  );
-}
-
-// Cliente de Turso (se crea perezosamente solo si se configuran las credenciales).
-let turso = null;
-function obtenerTurso() {
-  if (!turso && USAR_TURSO) {
-    turso = createClient({
-      url: TURSO_URL,
-      authToken: TURSO_AUTH_TOKEN,
-    });
-  }
-  return turso;
-}
-
-// ---------------------------------------------------------------------------
-// Ruta del archivo JSON (solo para modo local)
+// Ruta del archivo JSON
 // ---------------------------------------------------------------------------
 
 const DB_PATH = !process.env.DB_PATH
-  ? ES_VERCEL
-    ? '/tmp/catalogo.json'
-    : path.join(RAIZ_PROYECTO, 'data', 'catalogo.json')
+  ? path.join(RAIZ_PROYECTO, 'data', 'catalogo.json')
   : process.env.DB_PATH === ':memory:'
     ? ':memory:'
     : path.isAbsolute(process.env.DB_PATH)
@@ -114,7 +78,7 @@ function crearAdmin(ahora = AHORA()) {
   let passwordPlano = process.env.ADMIN_PASSWORD;
 
   if (!passwordPlano) {
-    if (ES_PRODUCCION) {
+    if (process.env.NODE_ENV === 'production') {
       throw new Error(
         'Configuración inválida: ADMIN_PASSWORD es obligatorio en producción.'
       );
@@ -164,7 +128,7 @@ function normalizarEstado(contenido) {
 }
 
 // ---------------------------------------------------------------------------
-// Modo JSON local (síncrono, envuelto en promesa para interfaz consistente)
+// Lectura / escritura del archivo JSON
 // ---------------------------------------------------------------------------
 
 function leerJson() {
@@ -236,165 +200,18 @@ function reiniciarJson() {
 }
 
 // ---------------------------------------------------------------------------
-// Modo Turso (libSQL, async)
-// ---------------------------------------------------------------------------
-
-async function inicializarTurso() {
-  const db = obtenerTurso();
-  if (!db) return;
-
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS usuarios (
-      id INTEGER PRIMARY KEY,
-      usuario TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
-      rol TEXT NOT NULL DEFAULT 'admin',
-      creado_en TEXT NOT NULL
-    );
-  `);
-
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS productos (
-      id TEXT PRIMARY KEY,
-      nombre TEXT NOT NULL,
-      descripcion TEXT,
-      precio REAL NOT NULL,
-      categoria TEXT,
-      stock INTEGER NOT NULL DEFAULT 0,
-      created_at TEXT NOT NULL,
-      updated_at TEXT NOT NULL
-    );
-  `);
-}
-
-async function sembrarTurso() {
-  const db = obtenerTurso();
-  if (!db) return;
-
-  const admin = crearAdmin();
-  await db.execute(
-    `INSERT OR IGNORE INTO usuarios (id, usuario, password_hash, rol, creado_en)
-     VALUES (?, ?, ?, ?, ?)`,
-    [admin.id, admin.usuario, admin.passwordHash, admin.rol, admin.creadoEn]
-  );
-
-  const ahora = AHORA();
-  for (const p of PRODUCTOS_SEED) {
-    await db.execute(
-      `INSERT OR IGNORE INTO productos
-       (id, nombre, descripcion, precio, categoria, stock, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [p.id, p.nombre, p.descripcion, p.precio, p.categoria, p.stock, ahora, ahora]
-    );
-  }
-}
-
-async function leerTurso() {
-  const db = obtenerTurso();
-  if (!db) throw new Error('Turso no está configurado.');
-
-  await inicializarTurso();
-
-  const [rowsUsuarios] = await db.execute('SELECT * FROM usuarios');
-  const [rowsProductos] = await db.execute('SELECT * FROM productos');
-
-  const usuarios = rowsUsuarios.rows.map((r) => ({
-    id: r.id,
-    usuario: r.usuario,
-    passwordHash: r.password_hash,
-    rol: r.rol,
-    creadoEn: r.creado_en,
-  }));
-
-  const productos = rowsProductos.rows.map((r) => ({
-    id: r.id,
-    nombre: r.nombre,
-    descripcion: r.descripcion,
-    precio: r.precio,
-    categoria: r.categoria,
-    stock: r.stock,
-    createdAt: r.created_at,
-    updatedAt: r.updated_at,
-  }));
-
-  // Garantizar que exista al menos un admin.
-  if (usuarios.length === 0) {
-    const admin = crearAdmin();
-    await db.execute(
-      `INSERT INTO usuarios (id, usuario, password_hash, rol, creado_en)
-       VALUES (?, ?, ?, ?, ?)`,
-      [admin.id, admin.usuario, admin.passwordHash, admin.rol, admin.creadoEn]
-    );
-    usuarios.push(admin);
-  }
-
-  return { usuarios, productos };
-}
-
-async function escribirTurso(estado) {
-  const db = obtenerTurso();
-  if (!db) throw new Error('Turso no está configurado.');
-
-  await inicializarTurso();
-
-  // Reemplazo completo: borrar y volver a insertar (volumen pequeño).
-  await db.execute('DELETE FROM productos');
-  await db.execute('DELETE FROM usuarios');
-
-  const ahora = AHORA();
-  for (const u of estado.usuarios || []) {
-    await db.execute(
-      `INSERT INTO usuarios (id, usuario, password_hash, rol, creado_en)
-       VALUES (?, ?, ?, ?, ?)`,
-      [u.id, u.usuario, u.passwordHash, u.rol, u.creadoEn || ahora]
-    );
-  }
-
-  for (const p of estado.productos || []) {
-    await db.execute(
-      `INSERT INTO productos
-       (id, nombre, descripcion, precio, categoria, stock, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        p.id,
-        p.nombre,
-        p.descripcion,
-        p.precio,
-        p.categoria,
-        p.stock,
-        p.createdAt || ahora,
-        p.updatedAt || ahora,
-      ]
-    );
-  }
-}
-
-async function reiniciarTurso() {
-  const db = obtenerTurso();
-  if (!db) throw new Error('Turso no está configurado.');
-
-  await db.execute('DELETE FROM productos');
-  await db.execute('DELETE FROM usuarios');
-  await sembrarTurso();
-  return leerTurso();
-}
-
-// ---------------------------------------------------------------------------
-// API unificada (async en ambos modos)
+// API pública (async para mantener una interfaz uniforme)
 // ---------------------------------------------------------------------------
 
 async function leer() {
-  if (USAR_TURSO) return leerTurso();
   return leerJson();
 }
 
 async function escribir(estado) {
-  if (USAR_TURSO) return escribirTurso(estado);
   escribirJson(estado);
 }
 
 async function reiniciar() {
-  if (USAR_TURSO) return reiniciarTurso();
   return reiniciarJson();
 }
 
@@ -402,8 +219,8 @@ async function reiniciar() {
 async function estado() {
   const datos = await leer();
   return {
-    archivo: USAR_TURSO ? 'turso (libSQL)' : DB_PATH,
-    formato: USAR_TURSO ? 'Turso (libSQL)' : 'JSON',
+    archivo: DB_PATH,
+    formato: 'JSON',
     productos: datos.productos.length,
     usuarios: datos.usuarios.length,
   };
@@ -416,7 +233,6 @@ module.exports = {
   reiniciar,
   DB_PATH,
   PRODUCTOS_SEED,
-  USAR_TURSO,
   crearAdmin,
   crearEstadoInicial,
 };

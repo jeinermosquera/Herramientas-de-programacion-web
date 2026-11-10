@@ -1,6 +1,6 @@
 // scripts/inspect-db.js
 // -----------------------------------------------------------------------------
-// Muestra un resumen de la base de datos (JSON local o Turso).
+// Muestra un resumen de la base de datos JSON.
 // Uso: node scripts/inspect-db.js
 // -----------------------------------------------------------------------------
 
@@ -9,9 +9,7 @@ const baseDatos = require('../src/config/database');
 (async () => {
   const { usuarios, productos } = await baseDatos.leer();
 
-  console.log('Modo:', baseDatos.USAR_TURSO ? 'Turso (libSQL)' : 'JSON');
-  console.log('Ruta/base:', baseDatos.DB_PATH);
-  console.log('Formato:', baseDatos.USAR_TURSO ? 'Turso (libSQL)' : 'JSON');
+  console.log('Archivo:', baseDatos.DB_PATH);
   console.log('Productos:', productos.length);
   console.log(
     'Usuarios:',

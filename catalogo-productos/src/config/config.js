@@ -12,6 +12,4 @@ module.exports = {
   host: process.env.HOST || 'localhost',
   // Entorno de ejecución (development, production, test)
   env: process.env.NODE_ENV || 'development',
-  // URL base de la API
-  apiBaseUrl: process.env.API_BASE_URL || 'http://localhost:3000',
 };

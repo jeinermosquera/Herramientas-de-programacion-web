@@ -23,9 +23,8 @@ const app = express();
 
 // --- Configuración general ---
 
-// Directorio del frontend. En local __dirname apunta a /src; en Vercel la
-// función se ejecuta con process.cwd() en la raíz del proyecto. Se prueba
-// primero la raíz y luego la ruta relativa al archivo para cubrir ambos casos.
+// Directorio del frontend. Se prueba primero la raíz del proceso y luego la
+// ruta relativa al archivo, para funcionar tanto en local como en Render.
 const candidatosPublic = [
   path.join(process.cwd(), 'public'),
   path.join(__dirname, '..', 'public'),
@@ -35,8 +34,8 @@ const PUBLIC_DIR =
     fs.existsSync(path.join(dir, 'index.html'))
   ) || candidatosPublic[0];
 
-// Detrás de un proxy (Vercel, Render, Nginx) se necesita confiar en el primer
-// proxy para obtener la IP real del cliente (usada por el límite de intentos).
+// Detrás de un proxy (Render, Nginx) se necesita confiar en el primer proxy
+// para obtener la IP real del cliente (usada por el límite de intentos).
 app.set('trust proxy', 1);
 
 // No revelar el framework en la cabecera X-Powered-By.

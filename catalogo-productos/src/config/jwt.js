@@ -2,7 +2,7 @@
 // Configuración del token JWT.
 // Aquí se definen el secreto, el algoritmo y el tiempo de expiración.
 // El secreto se carga desde .env (local) o desde las variables de entorno
-// de la plataforma (Vercel).
+// de la plataforma (Render).
 
 // Garantiza que .env esté cargado aunque este módulo se importe directamente.
 require('dotenv').config();

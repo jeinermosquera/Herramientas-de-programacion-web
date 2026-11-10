@@ -1,15 +1,13 @@
 // scripts/reset-db.js
 // -----------------------------------------------------------------------------
 // Elimina los datos y los vuelve a crear con los valores iniciales.
-// Funciona tanto con JSON local como con Turso (según TURSO_URL/TURSO_AUTH_TOKEN).
 // Uso:  npm run db:reset
 // AVISO: borra todos los productos y usuarios creados.
 // -----------------------------------------------------------------------------
 
 const baseDatos = require('../src/config/database');
 
-console.log(`Modo de almacenamiento: ${baseDatos.USAR_TURSO ? 'Turso (libSQL)' : 'JSON'}`);
-console.log(`Ruta/base: ${baseDatos.DB_PATH}`);
+console.log(`Archivo: ${baseDatos.DB_PATH}`);
 
 (async () => {
   const resumen = await baseDatos.reiniciar();

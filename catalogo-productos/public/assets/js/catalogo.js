@@ -292,10 +292,6 @@ if (formLogin) {
     inpContrasena.addEventListener('keyup', actualizarCaps);
     inpContrasena.addEventListener('blur', () => capsHint.classList.add('d-none'));
   }
-
-  if (tieneSesion()) {
-    window.location.href = 'productos.html';
-  }
 }
 
 // --------------------------------------------------------------- Productos ----
@@ -665,7 +661,20 @@ async function eliminarProducto(id) {
 // --------------------------------------------------------------- Arranque ----
 
 document.addEventListener('DOMContentLoaded', () => {
-  // El panel solo se muestra con una sesión válida.
+  // --- Página de login: se limpia cualquier sesión previa para que el usuario
+  // siempre tenga que identificarse antes de entrar al panel.
+  if (formLogin) {
+    limpiarSesion();
+
+    if (new URLSearchParams(window.location.search).has('sesion')) {
+      mostrarToast('Sesión requerida', 'Inicia sesión para acceder al panel.', 'advertencia');
+    }
+
+    actualizarUIUsuario();
+    return;
+  }
+
+  // --- Panel de productos: requiere sesión válida ---
   if (tablaProductos) {
     if (!tieneSesion()) {
       redirigirALogin('requerida');
@@ -677,20 +686,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
     return;
   }
-
-  // Login: si ya hay sesión válida, va directo al panel.
-  if (formLogin) {
-    if (tieneSesion()) {
-      window.location.replace('productos.html');
-      return;
-    }
-
-    if (new URLSearchParams(window.location.search).has('sesion')) {
-      mostrarToast('Sesión requerida', 'Inicia sesión para acceder al panel.', 'advertencia');
-    }
-  }
-
-  actualizarUIUsuario();
 });
 
 // Funciones usadas por atributos onclick del HTML.
